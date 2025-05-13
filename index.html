@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael & Reynalyn's Monthsary</title>
+    <style>
+        :root {
+            --primary-400: #4a6bff;
+            --primary-500: #2541db;
+            --white: #ffffff;
+            --dark: #121212;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--white);
+            background-color: var(--dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 40px 0;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            z-index: 0;
+        }
+        
+        #particles-container {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        
+        .badge-white {
+            background-color: var(--white);
+            color: var(--dark);
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        /* Stats cards */
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .hero-stat {
+            width: 120px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            padding: 20px;
+        }
+        
+        .glass-effect {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .hero-stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Button Styles */
+        .footer-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border: none;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        .btn-white {
+            background-color: var(--white);
+            color: var(--dark);
+            border: 2px solid transparent;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-400), var(--primary-500));
+            color: white;
+        }
+        
+        .btn-white:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #5a78ff, #3551eb);
+        }
+        
+        /* Tooltip for disabled button */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Countdown timer */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 70px;
+        }
+        
+        .countdown-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            background: var(--glass-bg);
+            border-radius: 12px;
+            padding: 10px;
+            min-width: 70px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .countdown-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: var(--primary-400);
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-300 {
+            animation-delay: 0.3s;
+        }
+        
+        .delay-400 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-500 {
+            animation-delay: 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Particles animation */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(15px, 15px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+                padding: 0 10px;
+            }
+            
+            .hero-stats {
+                gap: 10px;
+                justify-content: center;
+            }
+            
+            .hero-stat {
+                width: 90px;
+                height: 90px;
+                padding: 10px;
+            }
+            
+            .hero-stat-number {
+                font-size: 1.8rem;
+            }
+            
+            .hero-stat-label {
+                font-size: 0.8rem;
+            }
+            
+            .footer-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+            
+            .countdown-timer {
+                gap: 8px;
+            }
+            
+            .countdown-item {
+                min-width: 60px;
+            }
+            
+            .countdown-value {
+                font-size: 1.5rem;
+                min-width: 60px;
+                padding: 8px;
+            }
+            
+            .countdown-label {
+                font-size: 0.8rem;
+            }
+            
+            .countdown-title {
+                font-size: 1.2rem;
+                padding: 0 10px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-stat {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .countdown-item {
+                min-width: 50px;
+            }
+            
+            .countdown-value {
+                font-size: 1.3rem;
+                min-width: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-bg"></div>
+        
+        <!-- Animated Particles -->
+        <div id="particles-container"></div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge badge-white fade-in">CELEBRATING TWO BEAUTIFUL MONTHS</div>
+                
+                <h1 class="hero-title fade-in delay-200">
+                    <span>Michael Joshua<span style="color: var(--primary-400);">&</span> Reynalyn</span>
+                </h1>
+                
+                <p class="hero-subtitle fade-in delay-300">
+                    Two hearts, one rhythm, unlimited possibilities
+                </p>
+                
+                <!-- Countdown Timer -->
+                <div class="countdown-container fade-in delay-400">
+                    <div>
+                        <h2 class="countdown-title">Countdown to Second Monthsary</h2>
+                        <div class="countdown-timer">
+                            <div class="countdown-item">
+                                <div id="countdown-days" class="countdown-value">00</div>
+                                <div class="countdown-label">Days</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div id="countdown-hours" class="countdown-value">00</div>
+                                <div class="countdown-label">Hours</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div id="countdown-minutes" class="countdown-value">00</div>
+                                <div class="countdown-label">Minutes</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div id="countdown-seconds" class="countdown-value">00</div>
+                                <div class="countdown-label">Seconds</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats cards with glassmorphism -->
+                <div class="hero-stats fade-in delay-400">
+                    <div id="days-count" class="hero-stat glass-effect">
+                        <div class="hero-stat-number">0</div>
+                        <div class="hero-stat-label">Days</div>
+                    </div>
+                    <div id="hours-count" class="hero-stat glass-effect fade-in delay-500">
+                        <div class="hero-stat-number">0</div>
+                        <div class="hero-stat-label">Hours</div>
+                    </div>
+                    <div class="hero-stat glass-effect fade-in" style="animation-delay: 0.6s;">
+                        <div class="hero-stat-number">∞</div>
+                        <div class="hero-stat-label">Memories</div>
+                    </div>
+                </div>
+                
+                <!-- Buttons -->
+                <div class="footer-buttons">
+                    <a href="indexs.html" class="btn btn-white fade-in" style="animation-delay: 0.7s;">Revisit Memories</a>
+                    <span class="tooltip">
+                        <a href="second_monthsary.html" id="secondMonthsaryBtn" class="btn btn-primary fade-in" style="animation-delay: 0.8s;">Second Monthsary</a>
+                        <span class="tooltiptext" id="tooltipText">This will unlock on the 15th</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Create particles animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles-container');
+            
+            // Create particles
+            for (let i = 0; i < 50; i++) {
+                createParticle(particlesContainer);
+            }
+            
+            // Update days since April 15th
+            updateDaysSinceStartDate();
+            
+            // Check if it's the 15th and start countdown
+            initializeCountdown();
+            
+            // Update countdown every second
+            setInterval(updateCountdown, 1000);
+        });
+        
+        function createParticle(container) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Random size between 2-6px
+            const size = Math.random() * 4 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Random position
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            particle.style.left = `${posX}%`;
+            particle.style.top = `${posY}%`;
+            
+            // Random opacity
+            particle.style.opacity = Math.random() * 0.5 + 0.3;
+            
+            // Animation
+            const duration = Math.random() * 20 + 10;
+            const animationName = `float-${Math.floor(Math.random() * 1000)}`;
+            
+            // Add keyframe animation dynamically
+            const keyframes = `
+                @keyframes ${animationName} {
+                    0%, 100% {
+                        transform: translate(0, 0);
+                    }
+                    50% {
+                        transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px);
+                    }
+                }
+            `;
+            
+            const styleSheet = document.createElement('style');
+            styleSheet.textContent = keyframes;
+            document.head.appendChild(styleSheet);
+            
+            particle.style.animation = `${animationName} ${duration}s infinite ease-in-out`;
+            container.appendChild(particle);
+        }
+        
+        // Function to update days since April 15th
+        function updateDaysSinceStartDate() {
+            // Original relationship start date (April 15, 2025)
+            const startDate = new Date(2025, 3, 15); // Month is 0-indexed (0=Jan, 1=Feb...)
+            
+            // Get current date in Philippine time (UTC+8)
+            const now = new Date();
+            const phTime = new Date(now.getTime() + (8 * 60 * 60 * 1000)); // Add 8 hours for PH time
+            
+            // Calculate difference in milliseconds
+            const diffMs = phTime - startDate;
+            
+            // Convert to days and hours
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            const diffHours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const totalHours = diffDays * 24 + diffHours;
+            
+            // Update the stats display
+            document.querySelector('#days-count .hero-stat-number').textContent = diffDays;
+            document.querySelector('#hours-count .hero-stat-number').textContent = totalHours;
+        }
+        
+        // Function to get the next 15th date
+        function getNextFifteenth() {
+            // Get current date in Philippine time (UTC+8)
+            const now = new Date();
+            const phTime = new Date(now.getTime() + (8 * 60 * 60 * 1000)); // Add 8 hours for PH time
+            
+            // Create date for the 15th of current month
+            const targetDate = new Date(phTime);
+            targetDate.setUTCDate(15);
+            targetDate.setUTCHours(0, 0, 0, 0);
+            
+            // If we've already passed the 15th this month, move to next month
+            if (phTime.getUTCDate() > 15) {
+                targetDate.setUTCMonth(targetDate.getUTCMonth() + 1);
+            }
+            
+            return targetDate;
+        }
+        
+        // Initialize countdown and button state
+        function initializeCountdown() {
+            // Get current date and next 15th in PH time
+            const now = new Date();
+            const phTime = new Date(now.getTime() + (8 * 60 * 60 * 1000)); // Add 8 hours for PH time
+            const day = phTime.getUTCDate();
+            
+            const secondMonthsaryBtn = document.getElementById('secondMonthsaryBtn');
+            const tooltipText = document.getElementById('tooltipText');
+            
+            // If it's not the 15th, disable the button
+            if (day !== 15) {
+                secondMonthsaryBtn.classList.add('disabled');
+                updateCountdown(); // Start the countdown
+                
+                tooltipText.innerHTML = 'This special content will unlock on the 15th';
+            } else {
+                // It's the 15th! Enable the button
+                secondMonthsaryBtn.classList.remove('disabled');
+                
+                // Hide countdown and show celebration message
+                document.querySelector('.countdown-container').innerHTML = 
+                    '<h2 class="countdown-title" style="color: #6ee7b7; font-size: 2rem;">Today is the day! 🎉</h2>' +
+                    '<p style="font-size: 1.2rem;">Happy Second Monthsary!</p>';
+                
+                secondMonthsaryBtn.innerHTML = 'Second Monthsary';
+                tooltipText.innerHTML = 'Special content unlocked today!';
+            }
+        }
+        
+        // Update countdown timer
+        function updateCountdown() {
+            const now = new Date();
+            const phTime = new Date(now.getTime() + (8 * 60 * 60 * 1000)); // PH time
+            const nextFifteenth = getNextFifteenth();
+            
+            // If it's already the 15th, don't show countdown
+            if (phTime.getUTCDate() === 15) return;
+            
+            // Calculate time difference
+            const diff = nextFifteenth - phTime;
+            
+            // Calculate days, hours, minutes, seconds
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            // Update countdown elements
+            document.getElementById('countdown-days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('countdown-hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('countdown-minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('countdown-seconds').textContent = seconds.toString().padStart(2, '0');
+            
+            // Update button text
+            const secondMonthsaryBtn = document.getElementById('secondMonthsaryBtn');
+            if (days > 0) {
+                secondMonthsaryBtn.innerHTML = `Second Monthsary (Unlocks in ${days} days)`;
+            } else {
+                // Less than a day remaining, show hours
+                secondMonthsaryBtn.innerHTML = `Second Monthsary (Unlocks in ${hours}h ${minutes}m)`;
+            }
+        }
+    </script>
+</body>
+</html>
